@@ -26,19 +26,18 @@ class Game
   def over?
     draw? || won?
   end
-  
-  def won?(board)
-    
-    WIN_COMBINATIONS.each do |combos|
-  
-      if combos[0] && combos[1] && combos[2] == "X"
-        return combos
-      elsif combos[0] && combos[1] && combos[2]  == "O"
-        return combos
-      else
-        return false
-      end
-      
+
+  def won?
+    WIN_COMBINATIONS.detect do |win_combination|  #[2, 4, 6]   #["X", "O", " ", " ", " ", " ", " ", "O", "X"]
+      win_index_1 = win_combination[0] #2
+      win_index_2 = win_combination[1] #4
+      win_index_3 = win_combination[2] #6
+
+      position_1 = board.cells[win_index_1] # load the value of the board at win_index_1
+      position_2 = board.cells[win_index_2] # load the value of the board at win_index_2
+      position_3 = board.cells[win_index_3] # load the value of the board at win_index_3
+
+          position_1 == position_2 && position_1 == position_3 && self.board.taken?(win_index_1+1)
     end
   end
 
